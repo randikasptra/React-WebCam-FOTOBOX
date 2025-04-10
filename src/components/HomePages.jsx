@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import frame1 from '../assets/potobooth1.jpeg';
+import frame2 from '../assets/potobooth2.jpeg';
+import frame3 from '../assets/potobooth3.jpeg';
 
-const frameImages = [
-  '/frames/frame1.png',
-  '/frames/frame2.png',
-  '/frames/frame3.png',
-];
+const frameImages = [frame1, frame2, frame3];
+
+
 
 const HomePages = () => {
   const navigate = useNavigate();
