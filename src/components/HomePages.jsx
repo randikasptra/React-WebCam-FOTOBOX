@@ -1,88 +1,70 @@
-import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-// Dummy image URLs (ganti dengan image kamu nanti)
 const frameImages = [
-    '/frames/frame1.png',
-    '/frames/frame2.png',
-    '/frames/frame3.png',
+  '/frames/frame1.png',
+  '/frames/frame2.png',
+  '/frames/frame3.png',
 ];
 
-function HomePage() {
-    const navigate = useNavigate();
-    const [selectedFrame, setSelectedFrame] = useState(null);
-    const [photoCount, setPhotoCount] = useState(3);
+const HomePages = () => {
+  const navigate = useNavigate();
+  const [selectedFrame, setSelectedFrame] = useState(null);
+  const [photoCount, setPhotoCount] = useState(3);
 
-    const handleStart = () => {
-        if (selectedFrame) {
-            navigate('/take', { state: { frame: selectedFrame, count: photoCount } });
-        } else {
-            alert('Pilih frame dulu ya!');
-        }
-    };
+  const handleStart = () => {
+    if (selectedFrame) {
+      navigate('/take', { state: { frame: selectedFrame, count: photoCount } });
+    } else {
+      alert('Pilih frame dulu ya!');
+    }
+  };
 
-    return (
-        <div className="p-6">
-            <h1 className="text-xl font-bold mb-4">Pilih Frame</h1>
-            <div className="flex gap-4 mb-6">
-                {frameImages.map((frame, index) => (
-                    <img
-                        key={index}
-                        src={frame}
-                        alt={`Frame ${index + 1}`}
-                        className={`w-32 border-4 ${selectedFrame === frame ? 'border-blue-500' : 'border-transparent'}`}
-                        onClick={() => setSelectedFrame(frame)}
-                    />
-                ))}
-            </div>
-            <h2 className="mb-2 font-semibold">Jumlah Foto</h2>
-            <div className="flex gap-4 mb-4">
-                <Button onClick={() => setPhotoCount(3)} variant={photoCount === 3 ? 'default' : 'outline'}>
-                    3 Foto
-                </Button>
-                <Button onClick={() => setPhotoCount(4)} variant={photoCount === 4 ? 'default' : 'outline'}>
-                    4 Foto
-                </Button>
-            </div>
-            <Button onClick={handleStart}>Mulai Ambil Foto</Button>
-        </div>
-    );
-}
+  return (
+    <div className="p-6 min-h-screen bg-pink-100">
+      <h1 className="text-2xl font-bold mb-4 text-pink-700">Pilih Frame</h1>
+      <div className="flex gap-4 mb-6">
+        {frameImages.map((frame, index) => (
+          <img
+            key={index}
+            src={frame}
+            alt={`Frame ${index + 1}`}
+            className={`w-32 h-32 object-cover border-4 rounded cursor-pointer ${
+              selectedFrame === frame ? 'border-pink-500' : 'border-transparent'
+            }`}
+            onClick={() => setSelectedFrame(frame)}
+          />
+        ))}
+      </div>
 
-function TakePage() {
-    // Implementasi webcam capture, timer 3 detik, dan gabung foto ke frame nanti
-    return (
-        <div className="p-6">
-            <h1 className="text-xl font-bold mb-4">Ambil Foto</h1>
-            {/* Tambahkan Webcam dan Timer di sini */}
-            <p>Halaman ini akan menampilkan kamera, countdown 3 detik dan hasil foto digabungkan ke dalam frame.</p>
-        </div>
-    );
-}
+      <h2 className="mb-2 font-semibold text-pink-700">Jumlah Foto</h2>
+      <div className="flex gap-4 mb-4">
+        <button
+          onClick={() => setPhotoCount(3)}
+          className={`px-4 py-2 rounded font-semibold ${
+            photoCount === 3 ? 'bg-pink-500 text-white' : 'bg-white border border-pink-300 text-pink-700'
+          }`}
+        >
+          3 Foto
+        </button>
+        <button
+          onClick={() => setPhotoCount(4)}
+          className={`px-4 py-2 rounded font-semibold ${
+            photoCount === 4 ? 'bg-pink-500 text-white' : 'bg-white border border-pink-300 text-pink-700'
+          }`}
+        >
+          4 Foto
+        </button>
+      </div>
 
-function FilterPage() {
-    // Implementasi pemilihan filter dan stiker, serta tombol simpan atau buang
-    return (
-        <div className="p-6">
-            <h1 className="text-xl font-bold mb-4">Filter & Stiker</h1>
-            {/* Pilihan filter dan stiker */}
-            <div className="flex gap-4">
-                <Button>Simpan Foto</Button>
-                <Button variant="destructive">Buang Foto</Button>
-            </div>
-        </div>
-    );
-}
+      <button
+        onClick={handleStart}
+        className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2 rounded font-bold transition-all duration-200"
+      >
+        Mulai Ambil Foto
+      </button>
+    </div>
+  );
+};
 
-export default function App() {
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/take" element={<TakePage />} />
-                <Route path="/filter" element={<FilterPage />} />
-            </Routes>
-        </Router>
-    );
-}
+export default HomePages;
